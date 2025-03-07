@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import GradientBoostingClassifier
+#from sklearn.ensemble import GradientBoostingClassifier
+from xgboost import XGBClassifier
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
@@ -33,7 +34,7 @@ if test_model:
     if search_params:
         model = Pipeline([
             ('preprosessor', preprosessor),
-            ('classifier', GradientBoostingClassifier(random_state=42))
+            ('classifier', XGBClassifier(random_state=42))
         ])
 
         param_grid = {
@@ -56,7 +57,7 @@ if test_model:
     else:
         model = Pipeline([
             ('preprosessor', preprosessor),
-            ('classifier', GradientBoostingClassifier(learning_rate=0.05, max_depth=2, n_estimators=500, random_state=42))
+            ('classifier', XGBClassifier(learning_rate=0.05, max_depth=2, n_estimators=600, random_state=42))
         ])
 
         model.fit(x_train, y_train)
@@ -66,7 +67,7 @@ if test_model:
 else:
     model = Pipeline([
         ('preprosessor', preprosessor),
-        ('classifier', GradientBoostingClassifier(learning_rate=0.05, max_depth=2, n_estimators=500, random_state=42))
+        ('classifier', XGBClassifier(learning_rate=0.05, max_depth=2, n_estimators=600, random_state=42))
     ])
 
     model.fit(x_train, y_train)
